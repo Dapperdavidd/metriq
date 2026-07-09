@@ -187,3 +187,16 @@ export const taskRouterAbi = [
     ],
   },
 ] as const;
+
+// Ring 3 (cut line). Only the RevealVerified event is ever needed off chain.
+export const revealVerifierAbi = [
+  {
+    type: "event",
+    name: "RevealVerified",
+    inputs: [
+      { name: "roundId", type: "bytes32", indexed: true },
+      { name: "agentId", type: "bytes32", indexed: true },
+      { name: "ok", type: "bool", indexed: false },
+    ],
+  },
+] as const;

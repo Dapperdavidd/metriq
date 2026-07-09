@@ -7,13 +7,15 @@ out = "out"
 libs = ["lib"]
 test = "test"
 script = "script"
-solc_version = "0.8.24"
+# Our contracts target 0.8.24 (pragma ^0.8.24); the compiler is 0.8.27 only because the
+# bb-generated UltraHonk verifier (Ring 3) uses require(bool, CustomError()) from 0.8.26+.
+solc_version = "0.8.27"
 optimizer = true
 optimizer_runs = 200
 # fuzz the cap boundary hard: the decline path is the spine of the design
 fuzz = { runs = 512 }
-# read the real Noir proof artifacts for the Ring 3 on-chain verification test
-fs_permissions = [{ access = "read", path = "../circuits/reveal/target" }]
+# read the committed Noir proof fixture for the Ring 3 on-chain verification test
+fs_permissions = [{ access = "read", path = "./test/fixtures" }]
 
 [rpc_endpoints]
 xlayer_testnet = "${RPC_URL}"

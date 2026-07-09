@@ -11,7 +11,7 @@
 
 import type { Abi, Hex, Log } from "viem";
 import type { RunEvent } from "@metriq/core";
-import { talloAbi, taskRouterAbi } from "./abi";
+import { revealVerifierAbi, talloAbi, taskRouterAbi } from "./abi";
 import type { makePublicClient } from "./client";
 import { decodeStringId, roundIdHex, tierFromIndex } from "./ids";
 import type { RunEventBus } from "./bus";
@@ -19,6 +19,7 @@ import type { RunEventBus } from "./bus";
 export interface IndexerAddresses {
   tallo: Hex;
   taskRouter: Hex;
+  revealVerifier?: Hex; // Ring 3, the cut line. Absent means the reveal is not watched.
 }
 
 type PublicClientLike = ReturnType<typeof makePublicClient>;
@@ -107,6 +108,16 @@ export function watchRun(
       map: (a) => ({ kind: "finished", ts: 0, agentId: decodeStringId(a.agentId), totalScore: Number(a.totalScore) }),
     },
   ];
+
+  // Ring 3 (cut line): watch the reveal only if a verifier address is configured.
+  if (addr.revealVerifier) {
+    specs.push({
+      address: addr.revealVerifier,
+      abi: revealVerifierAbi as unknown as Abi,
+      eventName: "RevealVerified",
+      map: (a) => ({ kind: "revealed", ts: 0, agentId: decodeStringId(a.agentId), ok: Boolean(a.ok) }),
+    });
+  }
 
   const seen = new Set<string>();
   const keyOf = (log: Log): string => `${log.blockNumber}:${log.logIndex}`;

@@ -34,6 +34,13 @@
   min-width: 0;
 }
 
+.agentRow {
+  display: flex;
+  align-items: center;
+  gap: var(--sp2);
+  min-width: 0;
+}
+
 .agent {
   font-family: var(--font-ui);
   font-weight: 600;

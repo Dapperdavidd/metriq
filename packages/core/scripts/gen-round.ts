@@ -189,6 +189,14 @@ function build(): { roundId: string; timed: TimedEvent[] } {
     }
   }
 
+  // Ring 3 (cut line): at settle, the winner posts one Noir proof. Green tick, route
+  // hidden. This is the only Ring 3 event the frontend ever needs.
+  const revealAt = Math.max(...timed.map((t) => t.atMs)) + 900;
+  timed.push({
+    atMs: revealAt,
+    event: { kind: "revealed", ts: revealAt, agentId: "adaptive", ok: true },
+  });
+
   timed.sort((a, b) => a.atMs - b.atMs || 0);
   return { roundId: "0x3fa9", timed };
 }

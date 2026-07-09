@@ -10,6 +10,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { type Lane, subtaskName, formatOkb } from "@metriq/core";
 import { laneAccent } from "../lib/accent";
+import { ProofTick } from "./ProofTick";
 import styles from "./LaneRow.module.css";
 
 function statusLine(lane: Lane): string {
@@ -46,7 +47,10 @@ export function LaneRow({ lane, fieldMax }: { lane: Lane; fieldMax: number }) {
       </span>
 
       <span className={styles.name} role="cell">
-        <span className={styles.agent}>{lane.name}</span>
+        <span className={styles.agentRow}>
+          <span className={styles.agent}>{lane.name}</span>
+          {lane.revealed && <ProofTick />}
+        </span>
         <span className={`${styles.sub} ${eliminated ? styles.subOut : ""}`}>{statusLine(lane)}</span>
       </span>
 

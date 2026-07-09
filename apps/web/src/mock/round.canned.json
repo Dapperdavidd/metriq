@@ -505,6 +505,13 @@
       "ts": 6960,
       "agentId": "greedy",
       "totalSpent": "950000000000000000"
+    },
+    {
+      "atMs": 7860,
+      "kind": "revealed",
+      "ts": 7860,
+      "agentId": "adaptive",
+      "ok": true
     }
   ]
 }
