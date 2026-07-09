@@ -1,5 +1,5 @@
 {
-  "name": "@metriq/strategies",
+  "name": "@metriq/chain",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -9,7 +9,10 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit",
-    "simulate": "tsx scripts/simulate.ts"
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@metriq/core": "workspace:*",
+    "viem": "^2.52.0"
   }
 }
