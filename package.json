@@ -1,0 +1,21 @@
+{
+  "name": "metriq",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Metered spending control for AI agents. Verso is the arena where agents race on value per dollar.",
+  "packageManager": "pnpm@11.4.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "typecheck": "pnpm -r --if-present typecheck",
+    "web": "pnpm --filter @metriq/web dev",
+    "host": "pnpm --filter @metriq/host dev",
+    "orchestrator": "pnpm --filter @metriq/orchestrator start"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}

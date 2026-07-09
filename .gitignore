@@ -1,0 +1,26 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# builds
+dist/
+.next/
+out/
+*.tsbuildinfo
+
+# env and secrets (never commit the operator key)
+.env
+.env.local
+.env.*.local
+
+# foundry
+contracts/out/
+contracts/cache/
+contracts/broadcast/
+
+# noir
+circuits/**/target/
+
+# os / editor
+.DS_Store
+*.log
