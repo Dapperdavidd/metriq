@@ -1,0 +1,93 @@
+.rail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp3);
+  height: 100%;
+}
+
+.ledgerHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: var(--sp2);
+}
+
+.ledgerTitle {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--graphite);
+}
+
+.ledgerRound {
+  font-size: 11px;
+  color: var(--graphite);
+}
+
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+}
+
+.empty {
+  color: var(--graphite);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: var(--sp3) 0;
+}
+
+.receipt {
+  display: grid;
+  grid-template-columns: 10px minmax(74px, 1.1fr) minmax(0, 1.6fr) 64px 40px 64px;
+  align-items: center;
+  gap: var(--sp2);
+  padding: var(--sp2) var(--sp1);
+  border-bottom: 1px dotted var(--rule);
+  font-size: 12px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.rAgent {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rLabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--graphite);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rCost {
+  text-align: right;
+  color: var(--lane-red);
+  font-size: 12px;
+}
+
+.rQual {
+  text-align: right;
+  color: var(--lane-green);
+  font-size: 12px;
+}
+
+.rRemain {
+  text-align: right;
+  color: var(--ink);
+  font-size: 12px;
+}

@@ -1,0 +1,212 @@
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) 160px 120px;
+  align-items: center;
+  gap: var(--sp3);
+  padding: var(--sp3);
+  padding-left: var(--sp4);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  /* the accent bar lives inside the left padding via boxShadow inset */
+  box-shadow: inset 4px 0 0 var(--accent);
+  transition:
+    background 220ms var(--ease-physical),
+    box-shadow 220ms var(--ease-physical);
+}
+
+.accentBar {
+  display: none; /* the inset boxShadow on .row carries the accent */
+}
+
+.pos {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--graphite);
+  text-align: center;
+}
+
+.name {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.agent {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--graphite);
+}
+
+.subOut {
+  color: var(--lane-red);
+  font-weight: 600;
+}
+
+/* budget meter: the drain */
+.meter {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meterTrack {
+  height: 8px;
+  background: var(--paper-dim);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.meterFill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+  transition: width 220ms var(--ease-physical);
+}
+
+.meterText {
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--graphite);
+}
+
+/* value per OKB: the number the tower sorts on */
+.val {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.valNum {
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.valOut {
+  color: var(--graphite);
+  text-decoration: line-through;
+  text-decoration-color: var(--lane-red);
+}
+
+.valBarTrack {
+  width: 100%;
+  height: 4px;
+  background: var(--paper-dim);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.valBarFill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 220ms var(--ease-physical);
+}
+
+/* THE cap-out takeover: the loudest thing on screen. Full red bar, paper text
+   (the contrast audit sizes paper-on-lane-red at 5.1:1). */
+.eliminated {
+  background: var(--lane-red);
+  border-color: var(--lane-red);
+  box-shadow: inset 4px 0 0 var(--ink);
+  animation: capout 620ms var(--ease-physical);
+}
+
+.eliminated .agent {
+  color: var(--paper);
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--paper) 55%, transparent);
+}
+
+.eliminated .pos {
+  color: var(--paper);
+}
+
+.eliminated .sub,
+.eliminated .subOut {
+  color: var(--paper);
+  font-weight: 600;
+}
+
+.eliminated .meterTrack {
+  background: color-mix(in srgb, var(--paper) 22%, var(--lane-red));
+  border-color: color-mix(in srgb, var(--paper) 30%, transparent);
+}
+
+.eliminated .meterFill {
+  background: var(--paper);
+}
+
+.eliminated .meterText {
+  color: color-mix(in srgb, var(--paper) 82%, transparent);
+}
+
+.eliminated .valNum {
+  color: var(--paper);
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--paper) 65%, transparent);
+}
+
+.eliminated .valBarTrack {
+  background: color-mix(in srgb, var(--paper) 22%, var(--lane-red));
+}
+
+.eliminated .valBarFill {
+  background: var(--paper);
+}
+
+@keyframes capout {
+  0% {
+    transform: translateX(0);
+    background: color-mix(in srgb, var(--lane-red) 55%, var(--paper));
+  }
+  10% {
+    transform: translateX(5px);
+  }
+  22% {
+    transform: translateX(-2px);
+  }
+  34% {
+    transform: translateX(0);
+  }
+  100% {
+    background: var(--lane-red);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eliminated {
+    animation: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: 28px minmax(0, 1fr) 84px;
+  }
+  .meter {
+    display: none;
+  }
+  .valNum {
+    font-size: 20px;
+  }
+}

@@ -1,0 +1,162 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp3);
+  padding: var(--sp3) var(--sp4);
+  border-bottom: 1px solid var(--ink);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(2px);
+}
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp2);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.mode {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--graphite);
+}
+
+.round {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--graphite);
+  margin-left: var(--sp2);
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: var(--sp4);
+}
+
+.state {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp2);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.stateLive {
+  color: var(--lane-red);
+}
+.stateLive .dot {
+  animation: pulse 1.4s var(--ease-physical) infinite;
+}
+.stateLocked {
+  color: var(--ink);
+}
+.stateIdle {
+  color: var(--graphite);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.clock {
+  font-size: 18px;
+  letter-spacing: 0.04em;
+}
+
+.metricLabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--graphite);
+}
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 62fr) 1px minmax(0, 38fr);
+  flex: 1;
+  min-height: 0;
+}
+
+.rule {
+  background: var(--ink);
+}
+
+.towerPane {
+  padding: var(--sp4);
+  min-width: 0;
+}
+
+.railPane {
+  padding: var(--sp4);
+  min-width: 0;
+  background: color-mix(in srgb, var(--paper-dim) 40%, transparent);
+}
+
+.lockStamp {
+  padding: var(--sp2) var(--sp4);
+  border-top: 1px solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-align: center;
+  color: var(--ink);
+  background: var(--paper-dim);
+}
+
+/* Tablet: the rail collapses under the tower. The tower is sacred and never leaves. */
+@media (max-width: 1100px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+  .rule {
+    display: none;
+  }
+  .railPane {
+    border-top: 1px solid var(--ink);
+  }
+}
+
+@media (max-width: 640px) {
+  .header {
+    padding: var(--sp2) var(--sp3);
+  }
+  .wordmark {
+    font-size: 22px;
+  }
+  .round {
+    display: none;
+  }
+  .status {
+    gap: var(--sp3);
+  }
+}
