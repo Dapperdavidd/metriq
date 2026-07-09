@@ -4,13 +4,13 @@
 // frontend renders the tower with it, so the tower's number and the Copilot's
 // number are the same number by construction. No game logic lives anywhere else.
 
-import { agentMeta } from "./agents.js";
-import type { RunEvent } from "./events.js";
-import { formatOkb } from "./format.js";
-import { QUALITY_TARGET, valuePerOkb } from "./metric.js";
-import type { Stub } from "./stub.js";
-import { stubLabel } from "./stub.js";
-import { subtaskName } from "./tasks.js";
+import { agentMeta } from "./agents";
+import type { RunEvent } from "./events";
+import { formatOkb } from "./format";
+import { QUALITY_TARGET, valuePerOkb } from "./metric";
+import type { Stub } from "./stub";
+import { stubLabel } from "./stub";
+import { subtaskName } from "./tasks";
 
 export type LaneStatus = "racing" | "finished" | "eliminated";
 

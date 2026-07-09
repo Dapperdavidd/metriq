@@ -6,9 +6,9 @@
 // what upgrades "trust the leaderboard" to "verify the leaderboard": every number
 // resolves to a tx a judge can open on the X Layer explorer. (Ring 2.)
 
-import type { RunEvent, Tier } from "./events.js";
-import { formatOkb } from "./format.js";
-import { subtaskName } from "./tasks.js";
+import type { RunEvent, Tier } from "./events";
+import { formatOkb } from "./format";
+import { subtaskName } from "./tasks";
 
 export interface Stub {
   serial: string; // the Stub tx hash, or a display serial under the mock

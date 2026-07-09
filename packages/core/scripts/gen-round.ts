@@ -18,7 +18,7 @@ import {
   rankLanes,
   type RunEvent,
   type Tier,
-} from "../src/index.js";
+} from "../src/index";
 
 interface Step {
   taskId: string;
