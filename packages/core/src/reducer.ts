@@ -158,8 +158,15 @@ export function reduceRun(state: RunState, e: RunEvent): RunState {
       break;
     }
     case "declined": {
+      // The declined event carries the exact task the cap breached on. It is the
+      // authority for the cap-out reason. On chain the indexer's CappedOut and
+      // PaymentDeclined watchers can arrive in either order, so if the lane is already
+      // eliminated, reconcile the reason here too.
       const lane = find(e.agentId);
-      if (lane) lane.lastTask = e.taskId;
+      if (lane) {
+        lane.lastTask = e.taskId;
+        if (lane.status === "eliminated") lane.reason = `ELIMINATED at ${subtaskName(e.taskId)}`;
+      }
       break;
     }
     case "capped": {
