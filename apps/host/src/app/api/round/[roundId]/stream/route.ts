@@ -16,6 +16,8 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ rou
   ensureWatching(roundId);
   const feed = bus();
 
+  let unsubscribe: (() => void) | undefined;
+
   const stream = new ReadableStream<Uint8Array>({
     start(controller) {
       const enc = new TextEncoder();
@@ -26,16 +28,14 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ rou
           // stream already closed
         }
       };
-      // replay the run so far, then subscribe to live events
-      feed.replay(roundId).forEach(send);
-      const unsubscribe = feed.subscribe(roundId, send);
       // a comment line keeps some proxies from buffering the stream
       controller.enqueue(enc.encode(": connected\n\n"));
-      // stash the unsubscribe on the controller for cancel()
-      (controller as unknown as { _unsub?: () => void })._unsub = unsubscribe;
+      // replay the run so far, then subscribe to live events
+      feed.replay(roundId).forEach(send);
+      unsubscribe = feed.subscribe(roundId, send);
     },
-    cancel(reason) {
-      void reason;
+    cancel() {
+      unsubscribe?.();
     },
   });
 
