@@ -7,6 +7,7 @@
 
 import type { RunState } from "@metriq/core";
 import { clockLabel } from "../lib/accent";
+import { useCopilot } from "../hooks/useCopilot";
 import { TimingTower } from "./TimingTower";
 import { LedgerRail } from "./LedgerRail";
 import styles from "./PitWall.module.css";
@@ -14,6 +15,7 @@ import styles from "./PitWall.module.css";
 export function PitWall({ state, roundId }: { state: RunState; roundId: string }) {
   const locked = state.phase === "settled";
   const live = state.phase === "live";
+  const copilotLine = useCopilot(state);
 
   return (
     <div className={styles.root}>
@@ -41,7 +43,7 @@ export function PitWall({ state, roundId }: { state: RunState; roundId: string }
         </section>
         <div className={styles.rule} aria-hidden />
         <aside className={styles.railPane} aria-label="Ledger rail">
-          <LedgerRail state={state} roundId={roundId} />
+          <LedgerRail state={state} roundId={roundId} copilotLine={copilotLine} />
         </aside>
       </div>
 

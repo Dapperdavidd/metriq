@@ -9,3 +9,4 @@ export * from "./metric";
 export * from "./format";
 export * from "./stub";
 export * from "./reducer";
+export * from "./snapshot";
