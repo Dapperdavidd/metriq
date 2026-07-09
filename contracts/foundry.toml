@@ -12,6 +12,8 @@ optimizer = true
 optimizer_runs = 200
 # fuzz the cap boundary hard: the decline path is the spine of the design
 fuzz = { runs = 512 }
+# read the real Noir proof artifacts for the Ring 3 on-chain verification test
+fs_permissions = [{ access = "read", path = "../circuits/reveal/target" }]
 
 [rpc_endpoints]
 xlayer_testnet = "${RPC_URL}"
