@@ -18,6 +18,21 @@ importers:
         specifier: ^5.7.3
         version: 5.9.3
 
+  apps/orchestrator:
+    dependencies:
+      '@metriq/chain':
+        specifier: workspace:*
+        version: link:../../packages/chain
+      '@metriq/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@metriq/strategies':
+        specifier: workspace:*
+        version: link:../../packages/strategies
+      viem:
+        specifier: ^2.52.0
+        version: 2.52.2(typescript@5.9.3)
+
   apps/web:
     dependencies:
       '@metriq/core':

@@ -5,3 +5,5 @@
 export * from "./abi";
 export * from "./ids";
 export * from "./client";
+export * from "./bus";
+export * from "./indexer";
