@@ -67,12 +67,16 @@ eliminated at PUBLISH. It also writes the canned round the frontend replays.
 
 ## Build phases
 
-| Phase | Ships |
-|-------|-------|
-| 0 | Workspace scaffold, frozen `packages/core`, Grid Ferme tokens. **(done)** |
-| 1A | Tallo + TaskRouter deployed, decline path proven with green tests. |
-| 1B | Pit Wall on the mock feed, tower re-sort, cap-out takeover, Copilot line. |
-| 2 | Indexer folds real events over SSE with replay. Mock to SSE swap. |
-| 3 | Orchestrator drives four seeded agents through a real testnet round. |
-| 4 | Ring 2 Stubs. Live Copilot call in front of the fallback. |
-| 5 | Checkpoint decides Ring 3. Tuning, empty/error states, record the demo. |
+| Phase | Ships | Status |
+|-------|-------|--------|
+| 0 | Workspace scaffold, frozen `packages/core`, Grid Ferme tokens | ✅ |
+| 1A | Tallo + TaskRouter, decline path proven (17 green tests + cap fuzz) | ✅ (testnet deploy pending operator key) |
+| 1B | Pit Wall on the mock feed, tower re-sort, cap-out takeover, Copilot | ✅ (verified via headless Chrome) |
+| 2 | Indexer folds real events over SSE with replay; mock↔SSE swap | ✅ (proven on anvil, in-process + full HTTP) |
+| 3 | Orchestrator drives four seeded agents through a real round | ✅ (proven end to end on anvil) |
+| 4 | Ring 2 Stubs (perforated receipts); pluggable Copilot + fallback | ✅ |
+| Ring 3 | Noir reveal: real circuit, real proof, on-chain UltraHonk verifier | ✅ (3 on-chain ZK tests, 20 total) |
+| 5 | Feed-lost/edge states, data-driven tuning, demo runbook | ✅ (see `DEMO.md`, `TUNING.md`) |
+
+The three externally-gated items remain the operator's: the X Layer testnet deploy +
+OKX Payment SDK / ASP listing, recording the 90-second demo, and submission.

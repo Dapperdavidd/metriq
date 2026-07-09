@@ -37,6 +37,13 @@ export function PitWall({ state, roundId }: { state: RunState; roundId: string }
         </div>
       </header>
 
+      {state.feedLost && (
+        <div className={styles.feedLost} role="status" aria-live="assertive">
+          <span className={styles.feedDot} aria-hidden />
+          Feed interrupted. Reconnecting, the ledger reconciles from the chain.
+        </div>
+      )}
+
       <div className={styles.split}>
         <section className={styles.towerPane} aria-label="Timing tower">
           <TimingTower state={state} />

@@ -11,13 +11,20 @@ import type { RoundState, Task } from "../src/types";
 const OKB = 10n ** 18n;
 const okb = (n: number): bigint => (BigInt(Math.round(n * 1000)) * OKB) / 1000n;
 
+// Tuning-day levers (July 15): premium prices on ENRICH (2) and ANALYZE (3) nudge by
+// +/-0.02 to keep Adaptive vs Conservative close while Greedy's cap-out stays at PUBLISH.
+// Override without editing source, e.g. ENRICH_PREMIUM=0.26 ANALYZE_PREMIUM=0.32 simulate.
+const ENRICH_PREM = Number(process.env.ENRICH_PREMIUM ?? "0.28");
+const ANALYZE_PREM = Number(process.env.ANALYZE_PREMIUM ?? "0.30");
+const TARGET = Number(process.env.QUALITY_TARGET ?? "80");
+
 // The Briefing, mirroring packages/core/src/tasks.ts (inlined to keep strategies
 // dependency-free).
 const BRIEFING: Task[] = [
   { id: "0", basePrice: okb(0.1), premiumPrice: null, baseScore: 10, premiumScore: 10, required: true },
   { id: "1", basePrice: okb(0.12), premiumPrice: null, baseScore: 10, premiumScore: 10, required: true },
-  { id: "2", basePrice: okb(0.1), premiumPrice: okb(0.28), baseScore: 10, premiumScore: 25, required: true },
-  { id: "3", basePrice: okb(0.12), premiumPrice: okb(0.3), baseScore: 12, premiumScore: 28, required: true },
+  { id: "2", basePrice: okb(0.1), premiumPrice: okb(ENRICH_PREM), baseScore: 10, premiumScore: 25, required: true },
+  { id: "3", basePrice: okb(0.12), premiumPrice: okb(ANALYZE_PREM), baseScore: 12, premiumScore: 28, required: true },
   { id: "4", basePrice: okb(0.15), premiumPrice: null, baseScore: 8, premiumScore: 8, required: false },
   { id: "5", basePrice: okb(0.2), premiumPrice: null, baseScore: 15, premiumScore: 15, required: true },
 ];
@@ -101,13 +108,21 @@ const check = (cond: boolean, msg: string): void => {
   }
 };
 
-check(by.greedy!.outcome.startsWith("ELIMINATED"), "greedy must cap out");
+// Tuning-day invariants, printed so the levers can be dialed by eye.
+const gap = Math.abs(by.adaptive!.vpd - by.conservative!.vpd);
+console.log(`Tuning invariants (ENRICH prem ${ENRICH_PREM}, ANALYZE prem ${ANALYZE_PREM}, target ${TARGET}):`);
+console.log(`  Greedy caps at:              ${by.greedy!.outcome.replace("ELIMINATED at ", "")}`);
+console.log(`  Adaptive reaches target:     ${by.adaptive!.score >= TARGET}`);
+console.log(`  Conservative reaches target: ${by.conservative!.score >= TARGET} (should be false)`);
+console.log(`  Adaptive vs Conservative val/OKB gap: ${gap.toFixed(2)} (target: within ~2)\n`);
+
+check(by.greedy!.outcome === "ELIMINATED at PUBLISH", "greedy must cap out at PUBLISH");
 check(by.adaptive!.outcome === "finished", "adaptive must finish");
 check(by.balanced!.outcome === "finished", "balanced must finish");
 check(by.conservative!.outcome === "finished", "conservative must finish");
 check(by.adaptive!.score >= by.balanced!.score, "adaptive must score >= balanced");
 check(by.adaptive!.score > by.conservative!.score, "adaptive must out-score conservative");
-check(by.conservative!.score < 80, "conservative must miss the quality target");
+check(by.conservative!.score < TARGET, "conservative must miss the quality target");
 
-console.log(failed ? "\nSIMULATION FAILED\n" : "\nThe field produces a real race: greedy out, adaptive leads.\n");
+console.log(failed ? "\nSIMULATION FAILED\n" : "\nThe field produces a real race: greedy out at PUBLISH, adaptive leads.\n");
 if (failed) process.exitCode = 1;

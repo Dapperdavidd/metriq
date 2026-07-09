@@ -92,7 +92,9 @@ export function reduceRun(state: RunState, e: RunEvent): RunState {
   const lanes = state.lanes.map(cloneLane);
   const stubs = state.stubs;
   let nextStubs = stubs;
-  let feedLost = state.feedLost;
+  // A live event means the feed is back; a feed-lost event raises the flag. So the
+  // banner shows only while disconnected and clears the moment events resume.
+  let feedLost = e.kind === "feed-lost";
 
   // Delta is a per-event pulse: only the lane touched by this event can flash green.
   for (const l of lanes) l.delta = 0;
