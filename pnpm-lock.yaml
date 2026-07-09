@@ -20,6 +20,8 @@ importers:
 
   packages/core: {}
 
+  packages/strategies: {}
+
 packages:
 
   '@esbuild/aix-ppc64@0.28.1':

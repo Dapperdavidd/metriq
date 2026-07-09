@@ -1,5 +1,5 @@
 {
-  "name": "@metriq/core",
+  "name": "@metriq/strategies",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -9,7 +9,6 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit",
-    "gen:round": "tsx scripts/gen-round.ts"
+    "typecheck": "tsc --noEmit"
   }
 }

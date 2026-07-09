@@ -1,0 +1,45 @@
+/* apps/web/src/styles/tokens.css
+ *
+ * Grid Ferme: F1 timing colour on graph paper. The signature is the timing colour,
+ * mapped onto value per dollar: purple = best, green = improving, red = out.
+ * Everything else is ink on paper. A dark theme, if added, is a variable swap only.
+ *
+ * Contrast audit (from the System Design section 11):
+ *   ink/paper 15.9:1 (AAA), graphite/paper 5.6:1,
+ *   paper on lane-red 5.1:1, lane-purple 7.6:1, lane-green 5.9:1 (all AA at size).
+ */
+
+:root {
+  /* paper substrate */
+  --paper: #f6f4ec;
+  --paper-dim: #edeae0;
+  --grid: #e4e0d4;
+  --ink: #1a1712;
+  --graphite: #5a5346;
+  --rule: #dcd7c9;
+
+  /* F1 timing colour, the one bold idea */
+  --lane-purple: #5b3fa8; /* best    */
+  --lane-green: #2e7d51; /* improving */
+  --lane-red: #c42b1c; /* out     */
+  --lane-slate: #5a6672; /* neutral */
+
+  /* 8-point spacing scale */
+  --sp1: 4px;
+  --sp2: 8px;
+  --sp3: 16px;
+  --sp4: 24px;
+  --sp5: 32px;
+  --sp6: 48px;
+  --sp7: 64px;
+  --sp8: 96px;
+
+  /* type roles: Fraunces (display), IBM Plex Sans (UI), IBM Plex Mono (data) */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-ui: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", "SF Mono", ui-monospace, monospace;
+
+  /* motion: short, physical easing. The re-sort is 220ms, not a celebration. */
+  --ease-physical: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-resort: 220ms;
+}

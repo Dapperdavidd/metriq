@@ -1,0 +1,510 @@
+{
+  "roundId": "0x3fa9",
+  "events": [
+    {
+      "atMs": 0,
+      "kind": "opened",
+      "ts": 0,
+      "agentId": "adaptive",
+      "cap": "1000000000000000000"
+    },
+    {
+      "atMs": 0,
+      "kind": "opened",
+      "ts": 0,
+      "agentId": "balanced",
+      "cap": "1000000000000000000"
+    },
+    {
+      "atMs": 0,
+      "kind": "opened",
+      "ts": 0,
+      "agentId": "conservative",
+      "cap": "1000000000000000000"
+    },
+    {
+      "atMs": 0,
+      "kind": "opened",
+      "ts": 0,
+      "agentId": "greedy",
+      "cap": "1000000000000000000"
+    },
+    {
+      "atMs": 800,
+      "kind": "charged",
+      "ts": 800,
+      "agentId": "adaptive",
+      "amount": "100000000000000000",
+      "remaining": "900000000000000000"
+    },
+    {
+      "atMs": 800,
+      "kind": "stub",
+      "ts": 800,
+      "agentId": "adaptive",
+      "taskId": "0",
+      "tier": "BASE",
+      "price": "100000000000000000",
+      "score": 10,
+      "cumulativeScore": 10,
+      "txHash": "0x00000000000000000000000000000000000000000000000000000000009f2c00"
+    },
+    {
+      "atMs": 1020,
+      "kind": "charged",
+      "ts": 1020,
+      "agentId": "balanced",
+      "amount": "100000000000000000",
+      "remaining": "900000000000000000"
+    },
+    {
+      "atMs": 1020,
+      "kind": "stub",
+      "ts": 1020,
+      "agentId": "balanced",
+      "taskId": "0",
+      "tier": "BASE",
+      "price": "100000000000000000",
+      "score": 10,
+      "cumulativeScore": 10,
+      "txHash": "0x00000000000000000000000000000000000000000000000000000000009f2c06"
+    },
+    {
+      "atMs": 1240,
+      "kind": "charged",
+      "ts": 1240,
+      "agentId": "conservative",
+      "amount": "100000000000000000",
+      "remaining": "900000000000000000"
+    },
+    {
+      "atMs": 1240,
+      "kind": "stub",
+      "ts": 1240,
+      "agentId": "conservative",
+      "taskId": "0",
+      "tier": "BASE",
+      "price": "100000000000000000",
+      "score": 10,
+      "cumulativeScore": 10,
+      "txHash": "0x00000000000000000000000000000000000000000000000000000000009f2c0c"
+    },
+    {
+      "atMs": 1460,
+      "kind": "charged",
+      "ts": 1460,
+      "agentId": "greedy",
+      "amount": "100000000000000000",
+      "remaining": "900000000000000000"
+    },
+    {
+      "atMs": 1460,
+      "kind": "stub",
+      "ts": 1460,
+      "agentId": "greedy",
+      "taskId": "0",
+      "tier": "BASE",
+      "price": "100000000000000000",
+      "score": 10,
+      "cumulativeScore": 10,
+      "txHash": "0x00000000000000000000000000000000000000000000000000000000009f2c11"
+    },
+    {
+      "atMs": 1900,
+      "kind": "charged",
+      "ts": 1900,
+      "agentId": "adaptive",
+      "amount": "120000000000000000",
+      "remaining": "780000000000000000"
+    },
+    {
+      "atMs": 1900,
+      "kind": "stub",
+      "ts": 1900,
+      "agentId": "adaptive",
+      "taskId": "1",
+      "tier": "BASE",
+      "price": "120000000000000000",
+      "score": 10,
+      "cumulativeScore": 20,
+      "txHash": "0x00000000000000000000000000000000000000000000000000000000009f2c01"
+    },
+    {
+      "atMs": 2120,
+      "kind": "charged",
+      "ts": 2120,
+      "agentId": "balanced",
+      "amount": "120000000000000000",
+      "remaining": "780000000000000000"
+    },
+    {
+      "atMs": 2120,
+      "kind": "stub",
+      "ts": 2120,
+      "agentId": "balanced",
+      "taskId": "1",
+      "tier": "BASE",
+      "price": "120000000000000000",
+      "score": 10,
+      "cumulativeScore": 20,
+      "txHash": "0x00000000000000000000000000000000000000000000000000000000009f2c07"
+    },
+    {
+      "atMs": 2340,
+      "kind": "charged",
+      "ts": 2340,
+      "agentId": "conservative",
+      "amount": "120000000000000000",
+      "remaining": "780000000000000000"
+    },
+    {
+      "atMs": 2340,
+      "kind": "stub",
+      "ts": 2340,
+      "agentId": "conservative",
+      "taskId": "1",
+      "tier": "BASE",
+      "price": "120000000000000000",
+      "score": 10,
+      "cumulativeScore": 20,
+      "txHash": "0x00000000000000000000000000000000000000000000000000000000009f2c0d"
+    },
+    {
+      "atMs": 2560,
+      "kind": "charged",
+      "ts": 2560,
+      "agentId": "greedy",
+      "amount": "120000000000000000",
+      "remaining": "780000000000000000"
+    },
+    {
+      "atMs": 2560,
+      "kind": "stub",
+      "ts": 2560,
+      "agentId": "greedy",
+      "taskId": "1",
+      "tier": "BASE",
+      "price": "120000000000000000",
+      "score": 10,
+      "cumulativeScore": 20,
+      "txHash": "0x00000000000000000000000000000000000000000000000000000000009f2c12"
+    },
+    {
+      "atMs": 3000,
+      "kind": "charged",
+      "ts": 3000,
+      "agentId": "adaptive",
+      "amount": "100000000000000000",
+      "remaining": "680000000000000000"
+    },
+    {
+      "atMs": 3000,
+      "kind": "stub",
+      "ts": 3000,
+      "agentId": "adaptive",
+      "taskId": "2",
+      "tier": "BASE",
+      "price": "100000000000000000",
+      "score": 10,
+      "cumulativeScore": 30,
+      "txHash": "0x00000000000000000000000000000000000000000000000000000000009f2c02"
+    },
+    {
+      "atMs": 3220,
+      "kind": "charged",
+      "ts": 3220,
+      "agentId": "balanced",
+      "amount": "280000000000000000",
+      "remaining": "500000000000000000"
+    },
+    {
+      "atMs": 3220,
+      "kind": "stub",
+      "ts": 3220,
+      "agentId": "balanced",
+      "taskId": "2",
+      "tier": "PREMIUM",
+      "price": "280000000000000000",
+      "score": 25,
+      "cumulativeScore": 45,
+      "txHash": "0x00000000000000000000000000000000000000000000000000000000009f2c08"
+    },
+    {
+      "atMs": 3440,
+      "kind": "charged",
+      "ts": 3440,
+      "agentId": "conservative",
+      "amount": "100000000000000000",
+      "remaining": "680000000000000000"
+    },
+    {
+      "atMs": 3440,
+      "kind": "stub",
+      "ts": 3440,
+      "agentId": "conservative",
+      "taskId": "2",
+      "tier": "BASE",
+      "price": "100000000000000000",
+      "score": 10,
+      "cumulativeScore": 30,
+      "txHash": "0x00000000000000000000000000000000000000000000000000000000009f2c0e"
+    },
+    {
+      "atMs": 3660,
+      "kind": "charged",
+      "ts": 3660,
+      "agentId": "greedy",
+      "amount": "280000000000000000",
+      "remaining": "500000000000000000"
+    },
+    {
+      "atMs": 3660,
+      "kind": "stub",
+      "ts": 3660,
+      "agentId": "greedy",
+      "taskId": "2",
+      "tier": "PREMIUM",
+      "price": "280000000000000000",
+      "score": 25,
+      "cumulativeScore": 45,
+      "txHash": "0x00000000000000000000000000000000000000000000000000000000009f2c13"
+    },
+    {
+      "atMs": 4100,
+      "kind": "charged",
+      "ts": 4100,
+      "agentId": "adaptive",
+      "amount": "300000000000000000",
+      "remaining": "380000000000000000"
+    },
+    {
+      "atMs": 4100,
+      "kind": "stub",
+      "ts": 4100,
+      "agentId": "adaptive",
+      "taskId": "3",
+      "tier": "PREMIUM",
+      "price": "300000000000000000",
+      "score": 28,
+      "cumulativeScore": 58,
+      "txHash": "0x00000000000000000000000000000000000000000000000000000000009f2c03"
+    },
+    {
+      "atMs": 4320,
+      "kind": "charged",
+      "ts": 4320,
+      "agentId": "balanced",
+      "amount": "120000000000000000",
+      "remaining": "380000000000000000"
+    },
+    {
+      "atMs": 4320,
+      "kind": "stub",
+      "ts": 4320,
+      "agentId": "balanced",
+      "taskId": "3",
+      "tier": "BASE",
+      "price": "120000000000000000",
+      "score": 12,
+      "cumulativeScore": 57,
+      "txHash": "0x00000000000000000000000000000000000000000000000000000000009f2c09"
+    },
+    {
+      "atMs": 4540,
+      "kind": "charged",
+      "ts": 4540,
+      "agentId": "conservative",
+      "amount": "120000000000000000",
+      "remaining": "560000000000000000"
+    },
+    {
+      "atMs": 4540,
+      "kind": "stub",
+      "ts": 4540,
+      "agentId": "conservative",
+      "taskId": "3",
+      "tier": "BASE",
+      "price": "120000000000000000",
+      "score": 12,
+      "cumulativeScore": 42,
+      "txHash": "0x00000000000000000000000000000000000000000000000000000000009f2c0f"
+    },
+    {
+      "atMs": 4760,
+      "kind": "charged",
+      "ts": 4760,
+      "agentId": "greedy",
+      "amount": "300000000000000000",
+      "remaining": "200000000000000000"
+    },
+    {
+      "atMs": 4760,
+      "kind": "stub",
+      "ts": 4760,
+      "agentId": "greedy",
+      "taskId": "3",
+      "tier": "PREMIUM",
+      "price": "300000000000000000",
+      "score": 28,
+      "cumulativeScore": 73,
+      "txHash": "0x00000000000000000000000000000000000000000000000000000000009f2c14"
+    },
+    {
+      "atMs": 5200,
+      "kind": "charged",
+      "ts": 5200,
+      "agentId": "adaptive",
+      "amount": "150000000000000000",
+      "remaining": "230000000000000000"
+    },
+    {
+      "atMs": 5200,
+      "kind": "stub",
+      "ts": 5200,
+      "agentId": "adaptive",
+      "taskId": "4",
+      "tier": "BASE",
+      "price": "150000000000000000",
+      "score": 8,
+      "cumulativeScore": 66,
+      "txHash": "0x00000000000000000000000000000000000000000000000000000000009f2c04"
+    },
+    {
+      "atMs": 5420,
+      "kind": "charged",
+      "ts": 5420,
+      "agentId": "balanced",
+      "amount": "150000000000000000",
+      "remaining": "230000000000000000"
+    },
+    {
+      "atMs": 5420,
+      "kind": "stub",
+      "ts": 5420,
+      "agentId": "balanced",
+      "taskId": "4",
+      "tier": "BASE",
+      "price": "150000000000000000",
+      "score": 8,
+      "cumulativeScore": 65,
+      "txHash": "0x00000000000000000000000000000000000000000000000000000000009f2c0a"
+    },
+    {
+      "atMs": 5640,
+      "kind": "charged",
+      "ts": 5640,
+      "agentId": "conservative",
+      "amount": "200000000000000000",
+      "remaining": "360000000000000000"
+    },
+    {
+      "atMs": 5640,
+      "kind": "stub",
+      "ts": 5640,
+      "agentId": "conservative",
+      "taskId": "5",
+      "tier": "BASE",
+      "price": "200000000000000000",
+      "score": 15,
+      "cumulativeScore": 57,
+      "txHash": "0x00000000000000000000000000000000000000000000000000000000009f2c10"
+    },
+    {
+      "atMs": 5860,
+      "kind": "charged",
+      "ts": 5860,
+      "agentId": "greedy",
+      "amount": "150000000000000000",
+      "remaining": "50000000000000000"
+    },
+    {
+      "atMs": 5860,
+      "kind": "stub",
+      "ts": 5860,
+      "agentId": "greedy",
+      "taskId": "4",
+      "tier": "BASE",
+      "price": "150000000000000000",
+      "score": 8,
+      "cumulativeScore": 81,
+      "txHash": "0x00000000000000000000000000000000000000000000000000000000009f2c15"
+    },
+    {
+      "atMs": 6040,
+      "kind": "finished",
+      "ts": 6040,
+      "agentId": "conservative",
+      "totalScore": 57
+    },
+    {
+      "atMs": 6300,
+      "kind": "charged",
+      "ts": 6300,
+      "agentId": "adaptive",
+      "amount": "200000000000000000",
+      "remaining": "30000000000000000"
+    },
+    {
+      "atMs": 6300,
+      "kind": "stub",
+      "ts": 6300,
+      "agentId": "adaptive",
+      "taskId": "5",
+      "tier": "BASE",
+      "price": "200000000000000000",
+      "score": 20,
+      "cumulativeScore": 86,
+      "txHash": "0x00000000000000000000000000000000000000000000000000000000009f2c05"
+    },
+    {
+      "atMs": 6520,
+      "kind": "charged",
+      "ts": 6520,
+      "agentId": "balanced",
+      "amount": "200000000000000000",
+      "remaining": "30000000000000000"
+    },
+    {
+      "atMs": 6520,
+      "kind": "stub",
+      "ts": 6520,
+      "agentId": "balanced",
+      "taskId": "5",
+      "tier": "BASE",
+      "price": "200000000000000000",
+      "score": 20,
+      "cumulativeScore": 85,
+      "txHash": "0x00000000000000000000000000000000000000000000000000000000009f2c0b"
+    },
+    {
+      "atMs": 6700,
+      "kind": "finished",
+      "ts": 6700,
+      "agentId": "adaptive",
+      "totalScore": 86
+    },
+    {
+      "atMs": 6920,
+      "kind": "finished",
+      "ts": 6920,
+      "agentId": "balanced",
+      "totalScore": 85
+    },
+    {
+      "atMs": 6960,
+      "kind": "declined",
+      "ts": 6960,
+      "agentId": "greedy",
+      "taskId": "5",
+      "attempted": "200000000000000000",
+      "remaining": "50000000000000000"
+    },
+    {
+      "atMs": 6960,
+      "kind": "capped",
+      "ts": 6960,
+      "agentId": "greedy",
+      "totalSpent": "950000000000000000"
+    }
+  ]
+}
