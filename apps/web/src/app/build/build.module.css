@@ -1,0 +1,313 @@
+.page {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--sp7) var(--sp4) var(--sp6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp5);
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp3);
+  max-width: 680px;
+}
+
+.eyebrow {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: var(--lane-red);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(30px, 5vw, 46px);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+.lede {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--graphite);
+}
+
+/* controls */
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp3);
+  padding: var(--sp3) var(--sp4);
+  border: 1px solid var(--ink);
+  background: var(--paper-dim);
+}
+
+.capField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp1);
+}
+
+.capLabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--graphite);
+}
+
+.capInputWrap {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--sp2);
+}
+
+.capInput {
+  width: 96px;
+  padding: var(--sp1) var(--sp2);
+  font-size: 20px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.capUnit {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--graphite);
+}
+
+.staked {
+  margin: 0;
+  font-size: 14px;
+  color: var(--graphite);
+}
+
+.stakedNum {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  color: var(--ink);
+}
+
+/* agent cards */
+.agents {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp3);
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp3);
+  padding: var(--sp4);
+  padding-left: var(--sp5);
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  overflow: hidden;
+  transition: opacity 120ms var(--ease-physical), border-color 120ms var(--ease-physical);
+}
+
+.cardOff {
+  opacity: 0.5;
+}
+
+.cardBar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+}
+
+.cardHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp2);
+}
+
+.cardId {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cardName {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.cardBase {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--graphite);
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp2);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--graphite);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.toggle input {
+  accent-color: var(--lane-purple);
+  width: 15px;
+  height: 15px;
+}
+
+.knobs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp3);
+}
+
+.knob {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp1);
+}
+
+.knobHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.knobLabel {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--graphite);
+}
+
+.knobValue {
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.range {
+  width: 100%;
+  accent-color: var(--lane-purple);
+  cursor: pointer;
+}
+
+.range:disabled {
+  cursor: not-allowed;
+}
+
+/* run */
+.run {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp4);
+  padding: var(--sp4) var(--sp5);
+  border: 1px solid var(--ink);
+  border-left: 4px solid var(--lane-purple);
+  background: color-mix(in srgb, var(--lane-purple) 5%, var(--paper));
+}
+
+.runNote {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp2);
+  max-width: 520px;
+}
+
+.runTag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--lane-purple);
+}
+
+.runNote p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--graphite);
+}
+
+.runActions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp2);
+}
+
+.runPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp1);
+  justify-content: center;
+  padding: var(--sp2) var(--sp4);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  border: 1px solid var(--ink);
+  transition: background 120ms var(--ease-physical);
+}
+
+.runPrimary:hover {
+  background: var(--lane-purple);
+  border-color: var(--lane-purple);
+}
+
+.runOnChain {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp2);
+  justify-content: center;
+  padding: var(--sp2) var(--sp4);
+  background: transparent;
+  color: var(--graphite);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  border: 1px dashed var(--rule);
+  cursor: not-allowed;
+}
+
+.soon {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  padding: 1px 5px;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  color: var(--graphite);
+}
+
+@media (max-width: 720px) {
+  .page {
+    padding: var(--sp5) var(--sp3);
+    gap: var(--sp4);
+  }
+  .agents {
+    grid-template-columns: 1fr;
+  }
+  .run {
+    padding: var(--sp4);
+  }
+}

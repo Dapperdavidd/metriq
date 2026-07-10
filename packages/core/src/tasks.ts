@@ -15,7 +15,9 @@ export interface SubtaskSpec {
   readonly required: boolean;
 }
 
-const OKB = 10n ** 18n;
+// 10n ** 18n written as a literal: the browser compiler downlevels the ** operator to
+// Math.pow, which throws on BigInt operands. The literal is immune and identical in value.
+const OKB = 1_000_000_000_000_000_000n;
 const okb = (whole: number): bigint => (BigInt(Math.round(whole * 1000)) * OKB) / 1000n;
 
 // # SUBTASK   BASE  PREM  REQ  RUBRIC

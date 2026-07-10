@@ -66,6 +66,9 @@ importers:
       '@metriq/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@metriq/strategies':
+        specifier: workspace:*
+        version: link:../../packages/strategies
       framer-motion:
         specifier: ^11.15.0
         version: 11.18.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
