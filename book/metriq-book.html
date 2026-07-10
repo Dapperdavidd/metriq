@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Metriq — The Field Manual</title>
+<style>
+  :root {
+    --paper: #f7f5ee; --paper-dim: #edeae0; --rule: #ded9cb; --ink: #1a1712;
+    --graphite: #5a5346; --purple: #5b3fa8; --green: #2e7d51; --red: #c42b1c; --slate: #5a6672;
+  }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; color: var(--ink); background: var(--paper);
+    font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    font-size: 11pt; line-height: 1.55;
+  }
+  @page { size: A4; margin: 16mm 17mm 18mm; }
+
+  h1, h2, h3, h4 { font-family: Georgia, serif; line-height: 1.15; color: var(--ink); }
+  h2 { font-size: 21pt; margin: 1mm 0 5mm; border-bottom: 2px solid var(--ink); padding-bottom: 3mm; }
+  h3 { font-size: 14pt; margin: 8mm 0 2mm; }
+  h4 { font-size: 10pt; margin: 5mm 0 1mm; letter-spacing: 0.06em; text-transform: uppercase; color: var(--graphite); }
+  p { margin: 0 0 3.2mm; }
+  a { color: var(--purple); text-decoration: none; }
+  strong { font-weight: 700; }
+  em { font-style: italic; }
+
+  .chapter { break-before: page; padding-top: 2mm; }
+  .chapter-num { font-family: ui-monospace, "SF Mono", monospace; letter-spacing: 0.22em;
+    color: var(--red); font-size: 9pt; text-transform: uppercase; display: block; margin-bottom: 2mm; }
+
+  code { font-family: ui-monospace, "SF Mono", monospace; font-size: 9pt;
+    background: var(--paper-dim); padding: 0.3px 3px; border-radius: 3px; }
+  .filename { font-family: ui-monospace, monospace; font-size: 7.6pt; letter-spacing: 0.09em;
+    color: var(--graphite); text-transform: uppercase; margin: 6mm 0 1mm; }
+  pre { background: var(--paper-dim); border: 1px solid var(--rule); border-left: 3px solid var(--slate);
+    border-radius: 4px; padding: 3.5mm 4.5mm; break-inside: avoid; font-size: 8.4pt; line-height: 1.5;
+    white-space: pre-wrap; overflow-wrap: anywhere; margin: 1mm 0 3mm; }
+  pre code { background: none; padding: 0; font-size: inherit; }
+  .cm { color: var(--graphite); font-style: italic; }
+
+  .callout { break-inside: avoid; border: 1px solid var(--rule); border-left: 4px solid var(--slate);
+    border-radius: 4px; padding: 3.5mm 4.5mm; margin: 4mm 0; background: #efeee9; }
+  .callout h4 { margin: 0 0 1.5mm; color: inherit; }
+  .callout p:last-child { margin-bottom: 0; }
+  .why { border-left-color: var(--purple); background: #f2eff8; }
+  .why h4 { color: var(--purple); }
+  .decision { border-left-color: var(--green); background: #edf4ef; }
+  .decision h4 { color: var(--green); }
+  .gotcha { border-left-color: var(--red); background: #faefed; }
+  .gotcha h4 { color: var(--red); }
+  .try { border-left-color: var(--slate); background: #eef1f3; }
+  .try h4 { color: var(--slate); }
+
+  .purple { color: var(--purple); font-weight: 700; }
+  .green { color: var(--green); font-weight: 700; }
+  .red { color: var(--red); font-weight: 700; }
+  .slate { color: var(--slate); font-weight: 700; }
+
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; font-size: 9.2pt; break-inside: avoid; }
+  th, td { text-align: left; padding: 1.6mm 2.5mm; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font-family: ui-monospace, monospace; font-size: 7.8pt; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--graphite); border-bottom: 1px solid var(--ink); }
+  .mono { font-family: ui-monospace, monospace; }
+
+  /* cover */
+  .cover { height: 262mm; display: flex; flex-direction: column; justify-content: space-between; break-after: page; }
+  .cover .kicker { font-family: ui-monospace, monospace; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--red); font-size: 9pt; }
+  .cover h1 { font-size: 74pt; margin: 4mm 0 0; letter-spacing: -0.02em; }
+  .cover .sub { font-size: 16pt; line-height: 1.4; max-width: 130mm; margin-top: 6mm; color: var(--ink); }
+  .cover .rule { height: 3px; background: var(--ink); margin: 8mm 0; }
+  .cover .meta { font-family: ui-monospace, monospace; font-size: 8.5pt; color: var(--graphite); letter-spacing: 0.05em; }
+  .lanebar { display: flex; gap: 3mm; margin-top: 6mm; }
+  .lanebar span { height: 6mm; flex: 1; border-radius: 2px; }
+
+  .toc { break-after: page; }
+  .toc ol { list-style: none; padding: 0; margin: 4mm 0 0; counter-reset: c; }
+  .toc li { display: flex; align-items: baseline; gap: 3mm; padding: 2mm 0; border-bottom: 1px dotted var(--rule); }
+  .toc .n { font-family: ui-monospace, monospace; color: var(--red); font-size: 9pt; width: 12mm; }
+  .toc .t { font-weight: 700; font-size: 12pt; }
+  .toc .d { color: var(--graphite); font-size: 9.5pt; margin-left: auto; text-align: right; max-width: 78mm; }
+  .lead { font-size: 12.5pt; color: var(--graphite); line-height: 1.5; margin-bottom: 5mm; }
+</style>
+</head>
+<body>
+
+<!-- ============================ COVER ============================ -->
+<section class="cover">
+  <div>
+    <div class="kicker">The Field Manual · Rev 1.0</div>
+    <h1>Metriq</h1>
+    <div class="sub">How the efficiency arena is built, one plane at a time. A step-by-step
+      reading of the whole codebase, written so you can change it with confidence.</div>
+    <div class="lanebar">
+      <span style="background:var(--purple)"></span>
+      <span style="background:var(--green)"></span>
+      <span style="background:var(--slate)"></span>
+      <span style="background:var(--red)"></span>
+    </div>
+  </div>
+  <div>
+    <div class="rule"></div>
+    <div class="meta">METERED SPENDING FOR AI AGENTS &nbsp;·&nbsp; X LAYER zkEVM · SOLIDITY · TYPESCRIPT · NOIR
+      &nbsp;·&nbsp; DECLINE, NEVER REVERT</div>
+  </div>
+</section>
+
+<!-- ============================ HOW TO READ ============================ -->
+<section>
+  <span class="chapter-num">Before you begin</span>
+  <h2>How to read this book</h2>
+  <p class="lead">This is not the design document. The design document argued for what to build.
+    This book explains what <em>was</em> built, why each piece is shaped the way it is, and where you
+    put your hands when you want to change it.</p>
+
+  <p>Metriq is a working system with three rings of scope, all built and proven. Rather than list
+    files, this book walks the system the way the data flows: from the one law that everything else
+    obeys, out to the chain that enforces it, through the process that drives the race, to the screen
+    a spectator watches. Every chapter ends where the next begins.</p>
+
+  <p>Four kinds of aside recur. Learn their colours and you can skim for exactly what you need:</p>
+
+  <div class="callout why"><h4>The why</h4><p>The reasoning behind a decision that is not obvious from
+    the code. When you are tempted to "simplify" something, read the nearest <span class="purple">why</span>
+    first — it usually explains what breaks.</p></div>
+
+  <div class="callout decision"><h4>The council's call</h4><p>A real fork in the road, the options that
+    were weighed, and the choice made. These are the load-bearing decisions; changing one ripples.</p></div>
+
+  <div class="callout gotcha"><h4>Gotcha</h4><p>A trap that already bit us, or one waiting for you.
+    Several of these were only found by running the real system, not by reading the code.</p></div>
+
+  <div class="callout try"><h4>Try it</h4><p>A command you can run right now to see the thing the
+    paragraph just described. The system is built to be pokeable without a chain or a key.</p></div>
+
+  <p>You do not need the chain, a wallet, or any paid service to follow along. Everything in this book
+    can be run for free on your own machine. Where a step genuinely needs a testnet or an operator key,
+    it is called out plainly.</p>
+</section>
+
+<!-- ============================ TOC ============================ -->
+<section class="toc">
+  <span class="chapter-num">Contents</span>
+  <h2>The map</h2>
+  <ol>
+    <li><span class="n">00</span><span class="t">The one law</span><span class="d">Decline, never revert. Why the whole design turns on a single sentence.</span></li>
+    <li><span class="n">01</span><span class="t">Three planes, one race</span><span class="d">The shape of the system and how a purchase travels through it.</span></li>
+    <li><span class="n">02</span><span class="t">The frozen core</span><span class="d">Events, the shared reducer, and the metric with a trap in it.</span></li>
+    <li><span class="n">03</span><span class="t">The referee is a contract</span><span class="d">Tallo and TaskRouter: money, caps, scoring, and the decline path.</span></li>
+    <li><span class="n">04</span><span class="t">Four minds, one budget</span><span class="d">The seeded strategies and the knapsack that wins.</span></li>
+    <li><span class="n">05</span><span class="t">One process drives the field</span><span class="d">The orchestrator, the write mutex, and the pacing lever.</span></li>
+    <li><span class="n">06</span><span class="t">The feed is the truth</span><span class="d">The indexer, the bus, SSE, and why mock and chain are interchangeable.</span></li>
+    <li><span class="n">07</span><span class="t">The Pit Wall</span><span class="d">Grid Fermé: the tower, the takeover, and four animated moments.</span></li>
+    <li><span class="n">08</span><span class="t">The narrator</span><span class="d">The Copilot: pluggable, deterministic, never blank.</span></li>
+    <li><span class="n">09</span><span class="t">Every number resolves to a tx</span><span class="d">Ring 2 Stubs: the receipt as a rendering rule.</span></li>
+    <li><span class="n">10</span><span class="t">Prove the win, hide the how</span><span class="d">Ring 3: the real Noir circuit, proof, and on-chain verifier.</span></li>
+    <li><span class="n">11</span><span class="t">Running and tuning</span><span class="d">Three modes, the tuning levers, and the demo.</span></li>
+    <li><span class="n">12</span><span class="t">Changing it</span><span class="d">Where to add features, the deviations from the doc, and the decision log.</span></li>
+  </ol>
+</section>
+<!-- ============================ CH 00 ============================ -->
+<section class="chapter">
+  <span class="chapter-num">Chapter 00</span>
+  <h2>The one law</h2>
+  <p class="lead">Metriq has exactly one non-negotiable rule, and every contract, event, and screen
+    exists to honour it: <strong>decline, never revert.</strong> Understand this sentence and the rest
+    of the system reads like a consequence of it.</p>
+
+  <h3>The elimination that erased its own evidence</h3>
+  <p>The product's most dramatic moment is a cap-out: an agent tries to buy one more subtask, has no
+    budget left, and is eliminated live. The claim that makes it more than a cartoon is that this
+    elimination is <em>on chain</em> — a real log a judge can open on the explorer. An earlier draft
+    implemented it the obvious way, and the obvious way is broken:</p>
+
+  <div class="filename">the path that erases its own evidence</div>
+  <pre><code><span class="cm">// Tallo.charge()</span>   a.active = false; emit CappedOut(...); return false;
+<span class="cm">// TaskRouter.pay()</span> bool ok = tallo.charge(...); if (!ok) revert CappedOut();</code></pre>
+
+  <p>On an EVM chain, <strong>a reverted transaction persists no logs.</strong> When <code>pay()</code>
+    reverts, the whole transaction unwinds and every event emitted inside it — including the
+    <code>CappedOut</code> the leaderboard is derived from — is discarded. The indexer never sees it.
+    The only thing that "knows" an agent was eliminated is the off-chain runner's local catch. That is
+    exactly the server-trusting state machine the design swore off: the drama would live in a variable,
+    not on the chain.</p>
+
+  <div class="callout gotcha"><h4>Gotcha</h4><p>This is not a style preference. A revert-on-overspend
+    path makes the sentence "eliminations are derived from on-chain logs" quietly <em>false</em>. Every
+    later guarantee (the ledger reconciles from the chain, every number resolves to a tx) collapses if
+    the elimination event does not persist.</p></div>
+
+  <h3>The fix, and why it is everywhere</h3>
+  <p>The correct path <em>declines</em>. On a cap breach, <code>charge()</code> deactivates the account,
+    emits the event, and returns <code>false</code> — it does not revert. The router mirrors that with
+    its own <code>PaymentDeclined</code> and also returns <code>false</code>. The state change and the
+    logs both persist. The event <em>is</em> the elimination beat, on chain, for real.</p>
+
+  <div class="callout why"><h4>The why</h4><p>Returning a boolean instead of reverting turns "failure"
+    into "information." A declined charge is not an error the system recovers from; it is a first-class
+    outcome the system reports. Once you internalise that, the whole event stream makes sense: it is a
+    log of outcomes, and outcomes never throw.</p></div>
+
+  <p>You will see this shape in <code>Tallo.charge</code>, in <code>TaskRouter.pay</code>, in the
+    <code>declined</code> and <code>capped</code> members of the event union, in the reducer's cap-out
+    handler, and in the red takeover on the tower. They are all the same law, seen from different planes.
+    When you add a new spend path, ask first: does it decline, or does it revert? Only one answer is
+    allowed.</p>
+</section>
+
+<!-- ============================ CH 01 ============================ -->
+<section class="chapter">
+  <span class="chapter-num">Chapter 01</span>
+  <h2>Three planes, one race</h2>
+  <p class="lead">Metriq is a thin, verifiable core split across three planes. Money and scores live on
+    the chain. An off-chain process runs the race and narrates it. The client is a live document. The
+    trick that keeps it honest: the client renders <em>indexed chain events</em>, never the backend's
+    own arithmetic.</p>
+
+  <div class="filename">the three planes</div>
+  <pre><code>CLIENT  — "Grid Ferme" (Next.js, React, SSE)
+          the Pit Wall: timing tower + ledger rail, one screen
+             ^  SSE: a typed, ordered, replayable RunEvent stream
+OFF-CHAIN — one Node process, four logical services
+          host (task + SSE + copilot) · indexer · orchestrator
+             ^  viem reads + event logs         |  OKX Payment SDK / pay()
+ON-CHAIN  — X Layer (OKX zkEVM L2), Solidity
+          Tallo.charge() DECLINES, never reverts
+          TaskRouter.pay() emits Stub / PaymentDeclined
+          RevealVerifier (Ring 3) verifies a Noir proof</code></pre>
+
+  <h3>Who is allowed to be trusted</h3>
+  <table>
+    <tr><th>Concern</th><th>Source of truth</th><th>How you check it</th></tr>
+    <tr><td>Money, caps, eliminations</td><td>The chain (contract state + events)</td><td>Open the tx on the explorer</td></tr>
+    <tr><td>Quality of work</td><td>The operator's published rubric</td><td>Recompute it; it is deterministic</td></tr>
+    <tr><td>The leaderboard</td><td>A pure fold over chain events</td><td>Re-run the reducer on the same events</td></tr>
+  </table>
+
+  <p>The frontend holds <strong>no game logic</strong>. It cannot decide who won; it can only render what
+    the chain already decided. This is why the system "fails safe": restart the client and it re-derives
+    every standing from the log; restart the off-chain process and it rebuilds from the chain; the task
+    host can be slow or offline and the standings still reconcile.</p>
+
+  <h3>The life of one purchase</h3>
+  <p>Follow a single premium ANALYZE buy all the way through, because every feature is a variation on
+    this path:</p>
+  <table>
+    <tr><th>#</th><th>Plane</th><th>What happens</th></tr>
+    <tr><td>1</td><td>Orchestrator</td><td>The adaptive strategy decides <code>{taskId:"3", tier:"PREMIUM"}</code>.</td></tr>
+    <tr><td>2</td><td>Orchestrator</td><td>Serialises the write through the operator key and calls <code>router.pay(...)</code>.</td></tr>
+    <tr><td>3</td><td>Chain</td><td><code>pay</code> calls <code>tallo.charge</code>; under cap, funds move, <code>Charged</code> + <code>Stub</code> emit in one tx.</td></tr>
+    <tr><td>4</td><td>Indexer</td><td><code>watchContractEvent</code> maps the two logs to a <code>charged</code> and a <code>stub</code> RunEvent onto the bus.</td></tr>
+    <tr><td>5</td><td>Host</td><td>The SSE route pushes both events to every connected client.</td></tr>
+    <tr><td>6</td><td>Client</td><td>The reducer folds them: spend ticks down, score ticks up, value/OKB recomputes, the tower re-sorts, a Stub receipt tears off.</td></tr>
+  </table>
+
+  <div class="callout why"><h4>The why: field size is a parameter, not a constant</h4><p>The contracts
+    treat the field as N accounts against one task. Four is the demo default; two is a fast duel; six is
+    the legible ceiling. The field is a single array (<code>FIELD_ORDER</code> in the core). Cutting to a
+    two-agent duel under deadline is editing that array, not refactoring anything.</p></div>
+</section>
+
+<!-- ============================ CH 02 ============================ -->
+<section class="chapter">
+  <span class="chapter-num">Chapter 02</span>
+  <h2>The frozen core</h2>
+  <p class="lead">One small package, <code>@metriq/core</code>, is the spine. It defines the shape of a
+    run event, the pure function that folds events into standings, and the metric everything is ranked
+    on. The backend and the frontend both import it, so the number on the tower and the number the
+    narrator speaks are <em>the same number by construction</em>. This package is frozen: change its
+    shapes only with great care.</p>
+
+  <h3>RunEvent: the one wire contract</h3>
+  <p>Everything that ever happens in a run is one of these. The mock emits them; the real indexer emits
+    them; they are identical either way. That interchangeability is the reason the whole UI can be built
+    before a single contract is deployed.</p>
+
+  <div class="filename">packages/core/src/events.ts</div>
+  <pre><code>export type RunEvent =
+  | { kind:"opened";   ts; agentId; cap }
+  | { kind:"stub";     ts; agentId; taskId; tier; price; score; cumulativeScore; txHash? }
+  | { kind:"charged";  ts; agentId; amount; remaining }
+  | { kind:"declined"; ts; agentId; taskId; attempted; remaining }
+  | { kind:"capped";   ts; agentId; totalSpent }
+  | { kind:"finished"; ts; agentId; totalScore }
+  | { kind:"revealed"; ts; agentId; ok }
+  | { kind:"feed-lost"; ts };</code></pre>
+
+  <div class="callout decision"><h4>The council's call: one additive field</h4><p>The design's event
+    union carried no transaction hash anywhere, yet the Ring 2 receipt's serial <em>is</em> a tx hash.
+    Rather than build a second data path later, we added one optional field — <code>txHash?</code> on the
+    <code>stub</code> event — while the shape was being frozen. Ring 1 ignores it; the mock supplies a
+    display serial; Ring 2 uses it. One data path, decided up front.</p></div>
+
+  <h3>The reducer: a pure fold, shared by two planes</h3>
+  <p><code>reduceRun(state, event)</code> is an ordinary reducer: give it the current standings and one
+    event, get the next standings. It is pure — no clock reads, no randomness, no I/O — which is why it
+    can run identically in a browser and on a server. Folding the whole event list gives the final
+    standings; folding it one event at a time drives the live animation.</p>
+
+  <p>Each event nudges one lane. A <code>charged</code> lowers spend and remaining; a <code>stub</code>
+    raises the cumulative score and tears off a receipt; a <code>capped</code> flips the lane to
+    eliminated and <em>freezes</em> its metric so it never recomputes again. After every event the reducer
+    re-ranks the lanes and folds a deterministic narrator line, so the state object is always complete.</p>
+
+  <div class="callout gotcha"><h4>Gotcha found on a real chain</h4><p>The cap-out reason ("ELIMINATED at
+    PUBLISH") reads the lane's last task. In the mock, events were pre-ordered so the declined task
+    arrived first. On a real chain the indexer's two watchers (<code>CappedOut</code> from Tallo,
+    <code>PaymentDeclined</code> from the router) can arrive in <em>either</em> order — so sometimes the
+    reason read the stale task and said "at VERIFY". The fix: the <code>declined</code> handler also
+    reconciles the reason if the lane is already eliminated, so the fold is order-independent. This bug
+    was invisible until we ran the anvil pipeline.</p></div>
+
+  <h3>The metric, and the trap inside it</h3>
+  <p>Agents are ranked on <strong>value per OKB</strong>: quality points divided by spend. It lives in
+    one file so it can never drift:</p>
+
+  <div class="filename">packages/core/src/metric.ts</div>
+  <pre><code>export function valuePerOkb(qualityPoints, spentWei) {
+  if (spentWei === 0n) return 0;
+  return qualityPoints / (Number(spentWei) / 1e18);
+}</code></pre>
+
+  <p>The trap: an agent that barely spends can post the <em>highest</em> raw value per OKB while
+    producing the <em>lowest</em> total quality. The Conservative strategy does exactly this. If the
+    tower ranked on raw efficiency, the agent that did the least would win — a bad story and a wrong one.</p>
+
+  <div class="callout why"><h4>The why: a two-key rank, not one</h4><p>The tower ranks in two keys.
+    First: did the lane reach the quality target? Target-reachers sort above non-reachers. Only <em>then</em>,
+    within each group, does value per OKB decide. Conservative posts the best raw efficiency but never
+    clears the target, so it is pinned below Adaptive and Balanced who did. Eliminated lanes are pinned
+    last with their metric frozen and struck through. The winner leads on delivered value, not on doing
+    the least.</p></div>
+
+  <div class="callout try"><h4>Try it</h4><p><code>pnpm --filter @metriq/core gen:round</code> folds the
+    scripted round through this exact reducer and prints the standings. Watch Conservative land at P3 with
+    the highest val/OKB — that is the trap being defused, live.</p></div>
+</section>
+
+<!-- ============================ CH 03 ============================ -->
+<section class="chapter">
+  <span class="chapter-num">Chapter 03</span>
+  <h2>The referee is a contract</h2>
+  <p class="lead">Two contracts hold the truth. <strong>Tallo</strong> owns money and the cap.
+    <strong>TaskRouter</strong> owns the task table and the score ledger. Splitting them keeps the money
+    contract small and auditable while the task logic evolves freely. Both obey the one law.</p>
+
+  <h3>Tallo: the ledger that declines</h3>
+  <p>Each agent has an <code>Account</code> with a cap, cumulative spend, and an active flag. Funding is
+    dead simple: <code>openAccount</code> is <code>payable</code>, and the value sent <em>is</em> the cap
+    — fund equals cap, no approval dance. The heart is <code>charge</code>:</p>
+
+  <div class="filename">contracts/src/Tallo.sol — the decline path</div>
+  <pre><code>function charge(bytes32 roundId, bytes32 agentId, uint128 amount)
+    external onlyRouter returns (bool ok)
+{
+    Account storage a = _accounts[roundId][agentId];
+    require(a.exists &amp;&amp; a.active, "missing/inactive");
+    uint128 remaining = a.cap - a.spent;
+    if (amount &gt; remaining) {
+        a.active = false;                      <span class="cm">// eliminate</span>
+        emit CapDeclined(roundId, agentId, amount, remaining);
+        emit CappedOut(roundId, agentId, a.spent);
+        return false;                          <span class="cm">// decline, do not revert</span>
+    }
+    a.spent += amount;
+    (bool sent,) = treasury.call{ value: amount }("");
+    require(sent, "transfer failed");
+    emit Charged(roundId, agentId, amount, a.spent, a.cap - a.spent);
+    return true;
+}</code></pre>
+
+  <div class="callout decision"><h4>The council's call: set-once router, not immutable</h4><p>Tallo needs
+    the router's address and the router needs Tallo's — a deploy cycle. Making both <code>immutable</code>
+    is a deadlock unless you predict addresses with CREATE2, which is fiddly and error-prone in a deploy
+    script. Instead <code>Tallo.router</code> is set once via <code>initRouter()</code> behind a
+    zero-address guard: the same freeze guarantee, a trivial two-step deploy. On the one-true-deadline
+    charge path, reliable beats clever.</p></div>
+
+  <h3>TaskRouter: scoring on chain, in one write</h3>
+  <p>The one paid entrypoint is <code>pay</code>. It checks the caller is the agent's controller and the
+    task is not already done, computes the tier price, calls <code>tallo.charge</code>, and — on success —
+    accrues score from the posted table and emits a single <code>Stub</code> carrying price, score, and
+    cumulative. One <code>pay</code> equals one on-chain receipt. On a decline it mirrors with
+    <code>PaymentDeclined</code> and returns false. There is no separate "report score" round-trip;
+    scoring is on chain from the posted table.</p>
+
+  <div class="callout decision"><h4>The council's call: a table-driven bonus</h4><p>The rubric gives
+    PUBLISH a +5 bonus <em>if</em> VERIFY was bought — a conditional the design's flat lookup could not
+    express. Dropping the bonus made the target margins razor-thin and killed VERIFY's whole purpose. So
+    the <code>Task</code> struct gained two fields, <code>bonusTaskId</code> and <code>bonusScore</code>:
+    if that task was completed, award the bonus. Scoring stays fully on chain and table-driven, and
+    VERIFY earns its place in the strategy.</p></div>
+
+  <div class="callout try"><h4>Try it</h4><p><code>cd contracts &amp;&amp; forge test</code> runs 20 tests.
+    The one that matters most, <code>test_charge_capBreach_declines_withoutReverting</code>, proves the
+    <code>CappedOut</code> log survives without a revert — the one law, asserted. A 512-run fuzz hammers
+    the cap boundary.</p></div>
+</section>
+<!-- ============================ CH 04 ============================ -->
+<section class="chapter">
+  <span class="chapter-num">Chapter 04</span>
+  <h2>Four minds, one budget</h2>
+  <p class="lead">The competitors are one base agent running four tuned spend policies. A strategy is a
+    <em>pure function of run context</em> — no LLM in the decision loop — which is what makes the demo
+    reproducible take after take. The race is close by construction, and the cap-out lands on cue.</p>
+
+  <h3>The four seeds</h3>
+  <table>
+    <tr><th>Strategy</th><th>Policy</th><th>Role in the demo</th></tr>
+    <tr><td class="purple">Adaptive</td><td>bounded 0/1 knapsack over remaining budget</td><td>the champion, decided late</td></tr>
+    <tr><td class="green">Balanced</td><td>best value/$ first, one planned ENRICH splurge</td><td>keeps P1 honest, near miss</td></tr>
+    <tr><td class="slate">Conservative</td><td>cheapest required first, hoards budget</td><td>finishes safe, never leads on total</td></tr>
+    <tr><td class="red">Greedy</td><td>premium everything, no guard</td><td>the elimination beat</td></tr>
+  </table>
+
+  <div class="callout why"><h4>The why: Greedy walks in order</h4><p>The design's one-line Greedy sorted
+    by raw score, which — worked through — actually caps out at VERIFY, not PUBLISH, breaking the scripted
+    beat. Greedy's essence is "premium everything, no self-preservation," so it is implemented as buying
+    the premium tier of every subtask <em>in order</em>. The required PUBLISH is therefore attempted last,
+    which is exactly where the cap stops it. The demo beat is load-bearing; the exact sort expression is not.</p></div>
+
+  <h3>The knapsack: the interview-impressive artifact</h3>
+  <p>Adaptive plans rather than reacts. Each tick it runs a bounded 0/1 knapsack over the remaining
+    budget, entering both tiers of a task as separate items and bounding the pool to
+    <code>horizon + 3</code> so it recomputes cheaply. It is a real optimiser, not a lookup:</p>
+
+  <div class="filename">packages/strategies/src/knapsack.ts (shape)</div>
+  <pre><code>items = tasks.flatMap(t =&gt; t.premiumPrice !== null
+  ? [{task,premium:false},{task,premium:true}] : [{task,premium:false}]);
+items.sort(by value-per-okb desc);
+pool = items.slice(0, horizon + 3);         <span class="cm">// bounded, cheap per tick</span>
+walk(i, spent, acc, score):                 <span class="cm">// 0/1 branch: take / skip</span>
+  if score &gt; bestScore: best = acc
+  if not used[task] and spent+price &lt;= budget: take
+  skip</code></pre>
+
+  <p>Its sequencing has one subtlety: when the plan includes VERIFY, Adaptive buys it <em>before</em>
+    PUBLISH so the +5 bonus lands. That is why Adaptive's 88 beats Conservative's 57 even though
+    Conservative barely spends.</p>
+
+  <div class="callout try"><h4>Try it — tuning day in one line</h4><p><code>pnpm --filter @metriq/strategies
+    simulate</code> runs all four through the real decline mechanics and prints the invariants. Override
+    prices to explore: <code>ANALYZE_PREMIUM=0.32 pnpm --filter @metriq/strategies simulate</code> and
+    watch the Adaptive-vs-Conservative gap blow from 0.40 to 5.56 — the tool rejects the over-tune.</p></div>
+</section>
+
+<!-- ============================ CH 05 ============================ -->
+<section class="chapter">
+  <span class="chapter-num">Chapter 05</span>
+  <h2>One process drives the field</h2>
+  <p class="lead">The orchestrator is the only writer. It holds the operator key (which owns the
+    controller role, so it signs every <code>pay</code>), opens and stakes identical budgets, and then
+    advances every lane independently — while serialising the actual contract writes.</p>
+
+  <h3>Serialise the writes, parallelise the waiting</h3>
+  <p>Every lane runs its own loop inside one <code>Promise.all</code>: decide, pay, wait, repeat. But all
+    those lanes share one operator key, and one key means one nonce sequence. Fire two transactions
+    concurrently and they collide on the same nonce.</p>
+
+  <div class="callout why"><h4>The why: a tiny write mutex</h4><p>The rule from the design — "serialise
+    contract writes through the operator key and parallelise the waiting" — is enforced by a one-object
+    mutex. Every <code>pay</code>/<code>open</code>/<code>finish</code> acquires the lock just long enough
+    to <em>send</em> the transaction (claim the next nonce); waiting for the receipt happens outside the
+    lock, in parallel. So the field advances concurrently but the nonces stay strictly ordered.</p></div>
+
+  <div class="filename">apps/orchestrator/src/util.ts (shape)</div>
+  <pre><code>class Mutex {
+  private tail = Promise.resolve();
+  run(fn) { const r = this.tail.then(fn, fn);
+            this.tail = r.then(()=&gt;{}, ()=&gt;{}); return r; }
+}</code></pre>
+
+  <h3>The pacing lever</h3>
+  <p>Between decisions each lane sleeps a jittered 300–900 ms. That stagger is what makes the tower
+    visibly re-sort instead of snapping. The jitter is a <em>seeded</em> PRNG (mulberry32), so the pacing
+    reproduces take after take — pin <code>JITTER_SEED</code> and the same run plays back identically.
+    Decisions come from the pure strategy; only the timing is random, and even that is deterministic.</p>
+
+  <div class="callout gotcha"><h4>Gotcha</h4><p>The lane loop reads the account's <code>active</code>
+    flag each tick and breaks if false. A declined <code>pay</code> also returns false and breaks the loop.
+    Either way the lane stops cleanly — but note <code>finish</code> is still called for eliminated lanes,
+    and the reducer <em>ignores</em> a <code>finished</code> event on an already-eliminated lane. Do not
+    "fix" that by skipping finish; the reducer's guard is intentional.</p></div>
+</section>
+
+<!-- ============================ CH 06 ============================ -->
+<section class="chapter">
+  <span class="chapter-num">Chapter 06</span>
+  <h2>The feed is the truth</h2>
+  <p class="lead">Everything off chain is stateless over the log. The indexer turns chain logs into
+    <code>RunEvent</code>s, a bus keeps an ordered replay per round, and SSE streams them to the client.
+    The mock and the real feed emit the identical stream, so swapping them is a transport change with
+    zero UI change.</p>
+
+  <h3>The one indirection that makes mock-first work</h3>
+  <p>The client subscribes through a two-line interface, <code>RunSource</code>. There are two
+    implementations: <code>MockRunSource</code> replays a canned JSON round on a timer;
+    <code>SseRunSource</code> wraps <code>EventSource</code>. The composition root — one file, one line —
+    chooses which. Everything downstream reads the same reducer, so the choice is invisible below it.</p>
+
+  <div class="filename">apps/web/src/app/page.tsx (the swap point)</div>
+  <pre><code>const source = FEED === "sse"
+  ? createSseRunSource(ROUND_ID)
+  : createMockRunSource({ speed: 1 });</code></pre>
+
+  <h3>The indexer: backfill, then watch, deduped</h3>
+  <p>The indexer maps six events (opened, charged, stub, declined→<code>declined</code>,
+    capped, finished) plus the optional Ring 3 reveal. A naive watcher only sees events emitted after it
+    starts — so a client that connects after the round already ran would get an empty replay.</p>
+
+  <div class="callout why"><h4>The why: backfill + dedup</h4><p>On start, the indexer first pulls the
+    round's whole history with <code>getContractEvents</code>, sorts it into chain order, and pushes it;
+    then it goes live with <code>watchContractEvent</code>. A <code>seen</code> set keyed on
+    <code>(blockNumber, logIndex)</code> makes the boundary between backfill and live never double-count.
+    This is why a late SSE joiner still gets the entire story.</p></div>
+
+  <p>The bus stamps each event's timestamp relative to the round's first event, matching the mock's
+    <code>atMs</code> semantics exactly — so the client's clock reads the same whether the source is
+    canned or chain. That symmetry is not an accident; it is the whole point.</p>
+
+  <div class="callout try"><h4>Try it — the whole pipeline, no testnet</h4><p><code>bash scripts/e2e-sse.sh</code>
+    starts anvil, deploys the contracts, runs the host (indexer + SSE) and the orchestrator, connects an
+    SSE client <em>before</em> the run, and folds the streamed events with the same reducer the frontend
+    uses. Fifty-four events over HTTP, same standings, greedy out at PUBLISH.</p></div>
+</section>
+
+<!-- ============================ CH 07 ============================ -->
+<section class="chapter">
+  <span class="chapter-num">Chapter 07</span>
+  <h2>The Pit Wall</h2>
+  <p class="lead">The frontend is one screen: a timing tower on the left (the sport), a ledger rail on the
+    right (the statement), one ink rule between them. It is a live sporting document, not a dashboard.
+    The signature is F1 timing colour on graph paper.</p>
+
+  <h3>Grid Fermé, in tokens</h3>
+  <p>Purple means best, green means improving, red means out, mapped onto value per dollar — a vocabulary
+    a spectator reads in half a second. Everything else is ink on paper. One bold idea; everything around
+    it quiet. The lane accent is a pure function of state:</p>
+
+  <div class="filename">apps/web/src/lib/accent.ts</div>
+  <pre><code>eliminated ? red           <span class="cm">// out</span>
+: rank === 1 ? purple      <span class="cm">// best</span>
+: delta &gt; 0 ? green         <span class="cm">// improving</span>
+: ink;                     <span class="cm">// neutral</span></code></pre>
+
+  <h3>Exactly four animated moments</h3>
+  <p>Budget drain, tower re-sort, cap-out takeover, final lock. No fifth. The re-sort is a 220 ms physical
+    translate via <code>motion</code> layout, not a celebration. The one place boldness is spent is the
+    cap-out: the lane turns full red, reads <span class="red">ELIMINATED at PUBLISH</span>, the metric
+    freezes struck through, and the survivors re-sort. <code>prefers-reduced-motion</code> collapses all
+    four to crossfades.</p>
+
+  <div class="callout gotcha"><h4>Gotcha: paper on red, not red on red</h4><p>The eliminated lane is a
+    full red bar. The first pass coloured its text dark red too — invisible. The contrast audit specifies
+    <em>paper</em> text on lane-red (5.1:1). The lesson generalises: every colour state also carries a
+    text-label twin, so "eliminated" is written, not just shown. That is the accessibility floor, and it
+    is not optional.</p></div>
+
+  <p>The tower is an ARIA table with <code>aria-live="polite"</code>, all money in tabular figures, focus
+    rings on keyboard nav. Tablet collapses the rail to a bottom sheet; mobile compresses lanes to
+    position, name, and value per OKB. The tower is sacred and never disappears at any width.</p>
+</section>
+
+<!-- ============================ CH 08 ============================ -->
+<section class="chapter">
+  <span class="chapter-num">Chapter 08</span>
+  <h2>The narrator</h2>
+  <p class="lead">The Copilot explains, in one sentence, why the order is what it is. It is a narrator,
+    never a judge: quality comes from the rubric, money from the chain, and the model only translates
+    state into a line a human reads in two seconds. Its defining property is that it <em>never goes
+    blank</em>.</p>
+
+  <h3>Deterministic first, live in front</h3>
+  <p>The reducer folds a deterministic line from the same state the tower shows —
+    "Adaptive leads on value per OKB, Greedy capped chasing raw score." That line needs no key, no
+    network, and cannot disagree with the tower because it reads the same lanes. The live model call,
+    when configured, sits <em>in front</em> of it: try the model, and on any error, timeout, or empty
+    parse, fall back to the deterministic line.</p>
+
+  <div class="callout decision"><h4>The council's call: a pluggable narrator</h4><p>The operator had no
+    budget for a paid API, so the Copilot became provider-pluggable. It picks, in order: an
+    OpenAI-compatible endpoint (<code>COPILOT_BASE_URL</code> — free Groq or Google AI Studio tiers, or a
+    local Ollama), then an Anthropic key, else the deterministic line. The default needs nothing and runs
+    offline. This is a justified deviation: the Copilot is a provider-agnostic narrator; the product's
+    real agents are the four strategies, not this line.</p></div>
+
+  <p>On the client, a <code>useCopilot</code> hook debounces to at most one call per four seconds so
+    inference never stalls the demo, and it only calls out when explicitly switched to live mode.
+    Otherwise it simply shows the reducer's line. In the recording, the deterministic path is the safe
+    choice — reproducible, instant, and honest.</p>
+</section>
+<!-- ============================ CH 09 ============================ -->
+<section class="chapter">
+  <span class="chapter-num">Chapter 09</span>
+  <h2>Every number resolves to a tx</h2>
+  <p class="lead">A Stub is not a new contract. It is a <em>rendering rule</em> over events that already
+    exist. This is what upgrades "trust the leaderboard" to "verify the leaderboard": every figure on
+    screen resolves to a transaction a judge can open on the explorer.</p>
+
+  <p>One completed subtask emits a <code>stub</code> event (with its paired <code>charged</code>). The
+    pure reducer <code>foldStubs</code> turns each into a receipt whose serial is the tx hash, with the
+    cost, the quality earned, and the remaining balance. In the ledger rail each receipt is a torn-edge
+    ticket — the perforation is the product's signature carried into the receipt — and the serial links
+    out to the X Layer explorer.</p>
+
+  <div class="callout why"><h4>The why: no new trust surface</h4><p>Because the Stub is derived from the
+    same events the tower folds, it cannot say anything the tower does not. It adds verifiability without
+    adding a place to be wrong. That is why Ring 2 could ship as a rendering change, not a contract change.</p></div>
+
+  <p>This is also where the earlier <code>txHash</code> decision pays off: the serial is right there in
+    the event, one data path, no reconciliation. Cutting Ring 2 would remove the receipts and leave the
+    tower untouched — the ledger rail simply shows less.</p>
+</section>
+
+<!-- ============================ CH 10 ============================ -->
+<section class="chapter">
+  <span class="chapter-num">Chapter 10</span>
+  <h2>Prove the win, hide the how</h2>
+  <p class="lead">Ring 3 is the optional flourish, and it is real. At settle, the winner posts one Noir
+    proof: it reached the quality target under the cap via a route matching a commitment posted before
+    the run — <em>without revealing the route</em>. This is not a mock. The proof is generated by
+    Barretenberg and verified on chain.</p>
+
+  <h3>The circuit</h3>
+  <p>The private witness is the route (which tier of each subtask), its prices, and its scores, plus a
+    salt. The public inputs are what the chain already knows: the commitment, the cap, the spend, the
+    quality target. Three assertions carry the claim:</p>
+
+  <div class="filename">circuits/reveal/src/main.nr (the three checks)</div>
+  <pre><code>let h = std::hash::pedersen_hash(preimage);
+assert(h == commitment);                    <span class="cm">// 1) plan matches the commitment</span>
+assert(total == spent);                     <span class="cm">// 2) prices sum to public spend...</span>
+assert(total as u64 &lt;= cap as u64);          <span class="cm">//    ...within cap</span>
+assert(earned as u64 &gt;= quality_target);     <span class="cm">// 3) the hidden route met the target</span></code></pre>
+
+  <div class="callout decision"><h4>The council's call: harden the commitment</h4><p>The design's circuit
+    committed only route + salt, which would let a prover keep the committed route but swap in inflated
+    scores. Our commitment binds route <em>and prices and scores</em>. A small change; a sound proof
+    instead of a plausible one.</p></div>
+
+  <h3>From circuit to on-chain green tick</h3>
+  <p>The pipeline is real and reproducible: <code>nargo compile</code> and <code>execute</code> produce
+    the witness; <code>bb prove</code> and <code>write_vk</code> produce an 8&nbsp;KB UltraHonk proof and
+    key; <code>bb write_solidity_verifier</code> emits a ~100&nbsp;KB Solidity verifier whose
+    <code>verify(bytes, bytes32[])</code> exactly matches the <code>INoirVerifier</code> interface
+    <code>RevealVerifier</code> already expected. The proof verifies off chain (<code>bb verify</code>)
+    and, more importantly, <em>on</em> chain: a Foundry test deploys the verifier, reads the committed
+    proof fixture, and confirms it — while a tampered public input is rejected.</p>
+
+  <div class="callout gotcha"><h4>Gotcha: the verifier needs a newer compiler</h4><p>The generated
+    verifier uses <code>require(bool, CustomError())</code>, a Solidity 0.8.26+ feature, so Foundry pins
+    0.8.27 even though our own contracts stay <code>^0.8.24</code>. The verifier also exceeds the EIP-170
+    code-size limit, so a mainnet deploy needs it split; on anvil and X Layer testnet it deploys as-is.</p></div>
+
+  <p>On screen this is one component: <code>ProofTick</code>, the green <span class="green">PROVEN</span>
+    badge that lands on the winner lane when the reveal is indexed. Cutting Ring 3 deletes that one file
+    and drops one address from the indexer config. Nothing else changes — that is the cut-line discipline
+    the design promised, honoured exactly.</p>
+
+  <div class="callout try"><h4>Try it</h4><p><code>cd contracts &amp;&amp; forge test --match-path
+    test/Reveal.t.sol</code> runs the three Ring 3 tests: the real proof verifies on chain, the reveal
+    emits the green tick, and a lied-about spend is rejected. The proof is committed, so this runs on a
+    fresh clone with no Noir toolchain.</p></div>
+</section>
+
+<!-- ============================ CH 11 ============================ -->
+<section class="chapter">
+  <span class="chapter-num">Chapter 11</span>
+  <h2>Running and tuning</h2>
+  <p class="lead">Three ways to run it, from zero-setup to fully on chain, all free. The full
+    instructions live in <code>DEMO.md</code>; the levers in <code>TUNING.md</code>. This chapter is the
+    orientation.</p>
+
+  <table>
+    <tr><th>Mode</th><th>Command</th><th>Needs</th></tr>
+    <tr><td>Mock (the safe run)</td><td class="mono">pnpm --filter @metriq/web dev</td><td>nothing</td></tr>
+    <tr><td>Full local pipeline</td><td class="mono">bash scripts/e2e-sse.sh</td><td>Foundry (anvil)</td></tr>
+    <tr><td>X Layer testnet</td><td class="mono">forge script Deploy … --broadcast</td><td>a funded key, OKX SDK</td></tr>
+  </table>
+
+  <h3>Tuning, made data-driven</h3>
+  <p>The race is close by construction, not luck. Four invariants must hold: Greedy caps at PUBLISH,
+    Adaptive finishes first among target-reachers, Conservative misses the target, and the
+    Adaptive-vs-Conservative value gap stays within about two. The simulator prints all four and fails
+    loudly if a change breaks them. The levers are the premium prices on ENRICH and ANALYZE, the quality
+    target, the knapsack horizon and reserve, and the jitter seed.</p>
+
+  <div class="callout why"><h4>The why: prices live in two languages</h4><p>The task table is duplicated
+    between the TypeScript core and the Solidity deploy script, because Solidity cannot import a TS table.
+    When you tune a price, change it in <code>packages/core/src/tasks.ts</code> and
+    <code>contracts/script/Deploy.s.sol</code>, then re-run <code>gen:round</code> and <code>simulate</code>
+    to confirm the drama still lands. The duplication is a known cost of the two-plane design; the
+    simulator is the guard that catches drift.</p></div>
+
+  <p>The 90-second script — beat by beat, with what to say — is in <code>DEMO.md</code>. The discipline it
+    enforces: if anything wobbles live, cut to the mock. The contracts and events stay real; only the
+    pacing is pinned.</p>
+</section>
+
+<!-- ============================ CH 12 ============================ -->
+<section class="chapter">
+  <span class="chapter-num">Chapter 12</span>
+  <h2>Changing it</h2>
+  <p class="lead">You now know the system as data flowing through three planes. This last chapter is a map
+    of where to put your hands, the decisions that are load-bearing, and the deviations from the original
+    design and why they were made.</p>
+
+  <h3>Where features go</h3>
+  <table>
+    <tr><th>You want to…</th><th>Start here</th></tr>
+    <tr><td>Add a subtask or change prices</td><td><code>packages/core/src/tasks.ts</code> + <code>contracts/script/Deploy.s.sol</code>, then <code>simulate</code></td></tr>
+    <tr><td>Add a fifth strategy</td><td><code>packages/strategies/src/policies.ts</code>; register it in <code>FIELD</code></td></tr>
+    <tr><td>Change the field size</td><td><code>FIELD_ORDER</code> in <code>packages/core/src/agents.ts</code></td></tr>
+    <tr><td>Add a new on-chain event to the UI</td><td>extend the frozen <code>RunEvent</code> union, teach the reducer, add an indexer spec</td></tr>
+    <tr><td>Restyle without breaking state</td><td>the CSS tokens in <code>apps/web/src/styles/tokens.css</code></td></tr>
+    <tr><td>Swap the narrator model</td><td>env only: <code>COPILOT_BASE_URL</code> / <code>COPILOT_MODEL</code></td></tr>
+  </table>
+
+  <div class="callout gotcha"><h4>Gotcha: the frozen core is frozen for a reason</h4><p>The
+    <code>RunEvent</code> union and the reducer's <code>RunState</code> shape are the contract between
+    every plane. Change a field and you touch the mock JSON, the indexer mappers, the reducer, and the
+    components at once. That is fine when intended — just do all of it in one change, and re-run
+    <code>gen:round</code> to confirm the mock still folds to the scripted drama.</p></div>
+
+  <h3>The deviations from the design, and why</h3>
+  <table>
+    <tr><th>Change</th><th>Why</th></tr>
+    <tr><td><code>txHash?</code> on the stub event</td><td>Ring 2's serial is a tx hash; one data path, decided while freezing the shape</td></tr>
+    <tr><td>Set-once router, not immutable</td><td>breaks the deploy cycle without a CREATE2 dance</td></tr>
+    <tr><td>Table-driven VERIFY bonus</td><td>keeps conditional scoring on chain; preserves VERIFY's purpose</td></tr>
+    <tr><td>Greedy walks in order</td><td>lands the cap-out at PUBLISH, the scripted beat</td></tr>
+    <tr><td>Vanilla CSS, not Tailwind</td><td>bespoke UI; zero fragile dependency; tokens are already CSS</td></tr>
+    <tr><td>Pluggable / free Copilot</td><td>no-budget operator; deterministic default is offline-safe</td></tr>
+    <tr><td>Hardened reveal commitment</td><td>binds prices and scores, not just the route — a sound proof</td></tr>
+    <tr><td>solc 0.8.27 for the build</td><td>the generated verifier needs 0.8.26+; our contracts stay ^0.8.24</td></tr>
+  </table>
+
+  <h3>The repository, at a glance</h3>
+  <pre><code>contracts/     Tallo, TaskRouter, RevealVerifier, HonkVerifier (Foundry, 20 tests)
+circuits/reveal/  the Noir circuit + Prover.toml (Ring 3)
+packages/core/    FROZEN: events, reducer, metric, stub fold, domain tables
+packages/strategies/  the four seeds + the knapsack
+packages/chain/   shared viem ABIs, id encoding, clients, indexer, bus
+apps/web/         the Pit Wall (Grid Ferme)
+apps/host/        task host, SSE feed, copilot, indexer runtime
+apps/orchestrator/  drives the field, holds the operator key
+scripts/          e2e.sh, e2e-sse.sh (anvil proofs)
+DEMO.md TUNING.md README.md   the runbooks</code></pre>
+
+  <div class="callout why"><h4>The last why</h4><p>Every decision in this book bent toward one property:
+    the number on the screen is the number on the chain, and you can prove it. Keep that property and you
+    can change almost anything. Break it — trust the backend's math, revert on overspend, let the tower
+    invent a standing — and you have a nice animation of a thing that is not true. The whole system is a
+    machine for staying honest under load. Build on it in that spirit.</p></div>
+</section>
+
+<!-- ============================ COLOPHON ============================ -->
+<section class="chapter">
+  <span class="chapter-num">Colophon</span>
+  <h2>The result stands</h2>
+  <p>This manual describes Metriq as built: three rings, all proven, all runnable for free. Ring 1 is the
+    whole game — accounts, cap, router, live tower, clean cap-out, narrator — proven end to end on a real
+    EVM. Ring 2 makes every number resolve to a transaction. Ring 3 lets the winner prove its efficiency
+    in zero knowledge, verified on chain.</p>
+
+  <p>What remains is not construction. It is the operator's: the X Layer testnet deploy with the OKX
+    Payment SDK, the ninety-second recording, and the submission. The machine is ready.</p>
+
+  <div class="rule" style="height:3px;background:var(--ink);margin:8mm 0;"></div>
+  <p class="mono" style="font-size:8.5pt;color:var(--graphite);letter-spacing:0.05em;">
+    METRIQ · THE FIELD MANUAL · REV 1.0 · DECLINE, NEVER REVERT · END</p>
+</section>
+</body>
+</html>
